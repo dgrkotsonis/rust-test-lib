@@ -21,5 +21,8 @@ mod tests {
 
         let result2 = multiply(2, 6);
         assert_eq!(result2, 12);
+
+        let result3 = divide(72, 8);
+        assert_eq!(result3, 9);
     }
 }
