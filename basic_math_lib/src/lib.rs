@@ -2,6 +2,10 @@ pub fn add(left: u64, right: u64) -> u64 {
     left + right
 }
 
+pub fn subtract(left: u64, right: u64) -> u64 {
+    left - right
+}
+
 pub fn multiply(left: u64, right: u64) -> u64 {
     left * right
 }
@@ -24,5 +28,8 @@ mod tests {
 
         let result3 = divide(72, 8);
         assert_eq!(result3, 9);
+
+        let result4 = subtract(14, 3);
+        assert_eq!(result4, 11);
     }
 }
