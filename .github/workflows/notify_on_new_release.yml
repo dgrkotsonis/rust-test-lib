@@ -4,7 +4,7 @@
 # Steps; Notify via slack automation/workflow
 # Try to set up automation that will create a new monday ticket to update snarkvm/snarkos?
 
-name: "Notify On Push"
+name: "Notify On New Release"
 
 on:
   release:
