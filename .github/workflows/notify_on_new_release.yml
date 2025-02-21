@@ -1,0 +1,65 @@
+# This is a test workflow for notifying us when an update gets pushed to
+# The main branch in this repo (TODO: flesh out)
+
+# Steps; Notify via slack automation/workflow
+# Try to set up automation that will create a new monday ticket to update snarkvm/snarkos?
+
+name: "Notify of New Push"
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  notify-and-create-ticket:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post a message in a channel
+        uses: slackapi/slack-github-action@v2.0.0
+        with:
+          webhook: ${{ secrets.TEST_SLACK_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            {
+              "text": "🚀 *New Release Published!*",
+              "attachments": [
+                {
+                  "color": "#439FE0",
+                  "fields": [
+                    {
+                      "title": "Repository",
+                      "value": "${{ github.repository }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Release Tag",
+                      "value": "${{ github.event.release.tag_name }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Release Name",
+                      "value": "${{ github.event.release.name }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Published By",
+                      "value": "${{ github.actor }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Release Notes",
+                      "value": "${{ github.event.release.body }}"
+                    }
+                  ]
+                }
+              ]
+            }
+      # Remove for now
+      # - name: Create Monday.com ticket
+      #   run: |
+      #     curl -X POST https://api.monday.com/v2 \
+      #       -H "Authorization: ${{ secrets.MONDAY_API_TOKEN }}" \
+      #       -H "Content-Type: application/json" \
+      #       -d '{
+      #         "query": "mutation { create_item (board_id: ${{ secrets.MONDAY_BOARD_ID }}, group_id: \"${{ secrets.MONDAY_GROUP_ID }}\", item_name: \"Release: ${{ github.event.release.name }} (${{ github.event.release.tag_name }})\", column_values: \"{\\\"text\\\": \\\"Release published by ${{ github.actor }}: ${{ github.event.release.body }}\\\"}\") { id } }"
+      #       }'

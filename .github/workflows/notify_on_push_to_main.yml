@@ -1,5 +1,0 @@
-# This is a test workflow for notifying us when an update gets pushed to
-# The main branch in this repo (TODO: flesh out)
-
-# Steps; Notify via slack automation/workflow
-# Try to set up automation that will create a new monday ticket to update snarkvm/snarkos?
