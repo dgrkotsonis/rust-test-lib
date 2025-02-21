@@ -7,8 +7,9 @@
 name: "Notify On New Release"
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - main
 
 jobs:
   notify-and-create-ticket:
@@ -21,7 +22,7 @@ jobs:
           webhook-type: incoming-webhook
           payload: |
             {
-              "text": "🚀 *New Release Published!*",
+              "text": "🚀 *New Push (Test)!*",
               "attachments": [
                 {
                   "color": "#439FE0",
@@ -30,25 +31,6 @@ jobs:
                       "title": "Repository",
                       "value": "${{ github.repository }}",
                       "short": true
-                    },
-                    {
-                      "title": "Release Tag",
-                      "value": "${{ github.event.release.tag_name }}",
-                      "short": true
-                    },
-                    {
-                      "title": "Release Name",
-                      "value": "${{ github.event.release.name }}",
-                      "short": true
-                    },
-                    {
-                      "title": "Published By",
-                      "value": "${{ github.actor }}",
-                      "short": true
-                    },
-                    {
-                      "title": "Release Notes",
-                      "value": "${{ github.event.release.body }}"
                     }
                   ]
                 }
